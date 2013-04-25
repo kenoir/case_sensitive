@@ -1,0 +1,19 @@
+body {
+    font-family: arial, FreeSans, Helvetica, sans-serif;
+    font-size:2em;
+}
+#phonebox {
+    position: relative;
+    height: 100px;
+    width: 200px;
+    background-color: red;
+    padding:10px;
+}
+a#control {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    font-size:0.5em;
+    color: white;
+    text-decoration: none;
+}
