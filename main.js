@@ -1,6 +1,8 @@
 var Handset = function () {
     this.speaker_element = document.getElementById('receiver');
     this.emote_element = document.getElementById('phonebox');
+    this.audio_player = document.createElement("audio");
+    this.speaker_element.appendChild(this.audio_player);
 };
 Handset.prototype.speaker = function (part_of_speech) {
     this.speaker_element.innerHTML = part_of_speech;
@@ -11,14 +13,17 @@ Handset.prototype.speaker = function (part_of_speech) {
         this.emote_element.style.backgroundColor = "black";
         this.emote_element.style.color = "white";
     }
-
 };
 Handset.prototype.wait_for_call = function () {
+    this.audio_player.pause();
     this.emote_element.style.backgroundColor = "white";
     this.emote_element.style.color = "black";    
     this.speaker('');
 }
 Handset.prototype.off_the_hook = function () {
+    this.audio_player.src = dial_tone_sound;
+    this.audio_player.loop = true;
+    this.audio_player.play();
     this.emote_element.style.backgroundColor = "blue";
     this.emote_element.style.color = "white";    
     this.speaker_element.innerHTML = '*beep beep*';   
@@ -26,22 +31,29 @@ Handset.prototype.off_the_hook = function () {
 
 var Ringer = function () {
     this.ringer_element = document.getElementById('phonebox');
+    this.audio_player = document.createElement("audio");
+    this.ringer_element.appendChild(this.audio_player);
 };
 Ringer.prototype.start_ringing = function (value) {
     var self = this;
     var ring_state = false;
+
+    self.audio_player.src = ring_sound;
     this.interval_id = setInterval(function () {
         if (ring_state) {
             self.ringer_element.style.backgroundColor = "orange";
         } else {
             self.ringer_element.style.backgroundColor = "red";
         }
+        self.audio_player.play();
         ring_state = !ring_state;
     }, 100);
+
     this.ringer_element.style.backgroundColor = "green";
 };
 Ringer.prototype.stop_ringing = function () {
     this.ringer_element.style.backgroundColor = "grey";
+    this.audio_player.pause();
     clearInterval(this.interval_id);
 };
 
